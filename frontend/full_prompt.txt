@@ -1,0 +1,75 @@
+﻿<USER_REQUEST>
+ompt
+You are a React expert. I am building DoneZo, a React 19 + Vite task manager. I need a new page called VisualIntelligencePage.jsx at src/pages/VisualIntelligence.jsx.
+
+TECH STACK: React 19, Recharts 3.8.1, Framer Motion 12, Lucide React, Tailwind CSS, Framer Motion. State comes from useOutletContext() â€” the tasks array is live and real.
+
+WHAT TO BUILD â€” four tab sections in one page:
+
+---
+TAB 1: Analytics
+Compute these metrics live from the tasks array (no mock data):
+  - totalTasks, completedTasks, inProgressTasks, overdueTasks (dueDate < now and status !== 'done')
+  - completionRate = Math.round((completedTasks / totalTasks) * 100)
+  - avgCompletionTime: average hours between createdAt and completedAt for done tasks
+
+Display as 4 StatCards in a row, then:
+  - AreaChart (Recharts): group completedAt timestamps into last 7 days buckets, show completion trend
+  - Two BarCharts side by side: tasks by status (todo/in_progress/done), tasks by priority (low/medium/high)
+
+All Recharts components must use ResponsiveContainer width="100%" and have dark-mode-safe colors using Tailwind's dark: variant.
+
+---
+TAB 2: Infographic
+Build a visual summary card grid (2Ã—2) showing:
+  1. Priority breakdown â€” horizontal bars, color coded (red=high, amber=medium, green=low)
+  2. Completion ring â€” SVG donut with percentage in center, legend beside it
+  3. Top 4 stalled tasks â€” tasks in todo/in_progress sorted by oldest createdAt, show title + priority badge
+  4. Weekly heatmap â€” 7 columns (Monâ€“Sun), each cell shaded by tasks completed that day this week
+
+Below the grid: an "auto insight" box that generates 3 smart text insights by analysing the real tasks:
+  - Peak productivity day (most completedAt this week)
+  - Most blocked priority level (priority with most stuck tasks)
+  - Estimated days to clear backlog at current 7-day velocity
+
+---
+TAB 3: Mind map
+Render an interactive SVG mind map built dynamically from the real tasks array:
+  - Central node: project name o
+<truncated 663 bytes>
+ In Progress â†’ Review â†’ Done with feedback loop
+  2. "What to work on" â€” decision tree matching energy level to priority (mirrors SolveMyDay logic)
+  3. "Unblock a task" â€” decision tree for stalled tasks: diagnose blocker â†’ pick resolution path
+
+Each flowchart SVG uses Framer Motion for entrance animation (fade + slide up).
+
+---
+ALSO:
+- Create src/utils/taskAnalytics.js exporting these pure functions used by the page:
+    computeStats(tasks) â†’ { totalTasks, completedTasks, inProgressTasks, overdueTasks, completionRate, avgCompletionTime }
+    groupByDay(tasks, field, days) â†’ array of { date, count } for last N days
+    getStalledTasks(tasks) â†’ tasks in todo/in_progress sorted by oldest createdAt
+    computeInsights(tasks) â†’ { peakDay, mostBlockedPriority, daysToComplete }
+    buildMindMapData(tasks) â†’ { center, branches: [{ label, color, children: [{ id, label, priority }] }] }
+
+- Add "Visual Intel" nav item with ti-brain icon to Sidebar.jsx
+- Add the route /visual to DashboardLayout.jsx pointing to VisualIntelligence.jsx
+
+Show all files with full code. No explanation.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-29T15:06:29+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\Desktop\DoneZo\src\pages\Login.jsx (LANGUAGE_JAVASCRIPT)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\Desktop\DoneZo\src\components\Navbar.jsx (LANGUAGE_JAVASCRIPT)
+- c:\Users\Desktop\DoneZo\src\pages\Settings.jsx (LANGUAGE_JAVASCRIPT)
+- c:\Users\Desktop\DoneZo\src\pages\Login.jsx (LANGUAGE_JAVASCRIPT)
+- c:\Users\Desktop\DoneZo\index.html (LANGUAGE_HTML)
+- c:\Users\Desktop\DoneZo\tailwind.config.js (LANGUAGE_JAVASCRIPT)
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (Medium) to Gemini 3.1 Pro (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
