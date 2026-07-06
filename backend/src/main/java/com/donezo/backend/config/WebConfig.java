@@ -18,7 +18,8 @@ public class WebConfig {
                                 "http://localhost:*",
                                 "http://127.0.0.1:*",
                                 "https://*.vercel.app",
-                                "https://done-zo.vercel.app"
+                                "https://done-zo.vercel.app",
+                                "https://done-zo-delta.vercel.app"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
