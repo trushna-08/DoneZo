@@ -1,0 +1,13 @@
+target
+*.log
+.env
+.env.*
+src-delomboked
+effective-pom
+effective-pom.xml
+maven_debug.log
+backend.log
+backend.err.log
+.idea
+.vscode
+.DS_Store
