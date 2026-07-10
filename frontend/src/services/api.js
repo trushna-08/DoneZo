@@ -1,35 +1,50 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 function getAuthToken() {
-  return localStorage.getItem('donezo_token');
+  return localStorage.getItem("donezo_token");
 }
 
 function getErrorMessage(errorBody, fallback) {
   if (!errorBody) return fallback;
-  if (typeof errorBody === 'string') return errorBody;
+
+  if (typeof errorBody === "string") return errorBody;
+
   if (errorBody.message) return errorBody.message;
+
+  if (errorBody.error) return errorBody.error;
+
   if (errorBody.details) {
-    return Object.values(errorBody.details).join(', ');
+    return Object.values(errorBody.details).join(", ");
   }
+
   return fallback;
 }
 
 export async function apiRequest(path, options = {}) {
   const token = getAuthToken();
+
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...(options.headers || {}),
   };
 
+  const cleanBaseUrl = API_BASE_URL.replace(/\/$/, "");
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
   let response;
+
   try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
+    response = await fetch(`${cleanBaseUrl}${cleanPath}`, {
       ...options,
       headers,
     });
-  } catch {
-    throw new Error('Cannot connect to the server. Please make sure the backend is running.');
+  } catch (error) {
+    console.error("API connection error:", error);
+    throw new Error(
+      "Cannot connect to the server. Please check backend URL or internet connection."
+    );
   }
 
   const text = await response.text();
@@ -44,7 +59,9 @@ export async function apiRequest(path, options = {}) {
   }
 
   if (!response.ok) {
-    throw new Error(getErrorMessage(body, `Request failed with status ${response.status}`));
+    throw new Error(
+      getErrorMessage(body, `Request failed with status ${response.status}`)
+    );
   }
 
   return body;
