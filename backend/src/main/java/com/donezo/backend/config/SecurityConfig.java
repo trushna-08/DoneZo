@@ -47,17 +47,19 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Render root URL test
-                        .requestMatchers("/", "/health", "/error").permitAll()
+                        // Public DoneZo status routes for Render/browser testing
+                        .requestMatchers("/", "/api/status", "/error").permitAll()
 
-                        // Browser preflight request
+                        // Browser preflight request for frontend API calls
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Public APIs
+                        // Public authentication APIs
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Public Copilot APIs, keep this public only if your copilot does not require login
                         .requestMatchers("/api/copilot/**").permitAll()
 
-                        // WebSocket/SockJS endpoints if used
+                        // WebSocket/SockJS endpoints
                         .requestMatchers("/ws-endpoint/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
 
